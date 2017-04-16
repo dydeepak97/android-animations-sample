@@ -2,6 +2,7 @@ package code0987.sample;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -23,11 +24,16 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle options = ActivityOptions.makeSceneTransitionAnimation(
-                        MainActivity.this,
-                        findViewById(R.id.action_image),
-                        "action_image").toBundle();
-                startActivity(new Intent(MainActivity.this, ActivityOne.class), options);
+                Intent intent = new Intent(MainActivity.this, ActivityOne.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Bundle options = ActivityOptions.makeSceneTransitionAnimation(
+                            MainActivity.this,
+                            findViewById(R.id.action_image),
+                            "action_image").toBundle();
+                    startActivity(intent, options);
+                } else {
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -1,9 +1,42 @@
 <resources>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowActivityTransitions">true</item>
+
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/translucent</item>
+
+        <item name="android:colorForeground">@color/primary_text</item>
+        <item name="android:colorBackground">@color/translucent</item>
+        <item name="android:colorBackgroundCacheHint">@color/translucent</item>
+
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorTertiary">@color/secondary_text</item>
+
+        <item name="android:textColorPrimaryInverse">@color/primary_text</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text</item>
+        <item name="android:textColorTertiaryInverse">@color/secondary_text</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <item name="android:windowEnterTransition">@transition/a</item>
+        <item name="android:windowExitTransition">@transition/b</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/shared_a</item>
+        <item name="android:windowSharedElementExitTransition">@transition/shared_b</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
 </resources>

@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,60 +44,64 @@ public class ActivityTwo extends AppCompatActivity {
 
         final RelativeLayout content = (RelativeLayout) findViewById(R.id.content);
 
-        getWindow().getEnterTransition().addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getEnterTransition().addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
 
-            }
+                }
 
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                View view = content;
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        View view = content;
 
-                int x = (view.getLeft() + view.getRight()) / 2;
-                int y = (view.getTop() + view.getBottom()) / 2;
-                float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
-                Animator animator = ViewAnimationUtils.createCircularReveal(view, x, y, 0, finalRadius);
-                view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_blue_dark));
-                animator.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
+                        int x = (view.getLeft() + view.getRight()) / 2;
+                        int y = (view.getTop() + view.getBottom()) / 2;
+                        float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
+                        Animator animator = ViewAnimationUtils.createCircularReveal(view, x, y, 0, finalRadius);
+                        view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_blue_dark));
+                        animator.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animator) {
 
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animator) {
+                                content.addView(new AnimationView(ActivityTwo.this, null));
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animator) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animator) {
+
+                            }
+                        });
+                        animator.start();
                     }
+                }
 
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        content.addView(new AnimationView(ActivityTwo.this, null));
-                    }
+                @Override
+                public void onTransitionCancel(Transition transition) {
 
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
+                }
 
-                    }
+                @Override
+                public void onTransitionPause(Transition transition) {
 
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
+                }
 
-                    }
-                });
-                animator.start();
-            }
+                @Override
+                public void onTransitionResume(Transition transition) {
 
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
@@ -166,9 +173,10 @@ public class ActivityTwo extends AppCompatActivity {
                         paint.reset();
                         paint.setAntiAlias(true);
                         paint.setColor(p.C);
+                        paint.setShader(new LinearGradient(0, 0, 0, 1, particles.get(i).C, particles.get(j).C, Shader.TileMode.MIRROR));
                         paint.setAlpha((int) (((p.Proximity - d) / p.Proximity) * 255));
                         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-                        paint.setStrokeWidth(1f);
+                        paint.setStrokeWidth(1.5f);
 
                         path.reset();
                         path.moveTo(particles.get(i).X, particles.get(i).Y);
@@ -198,7 +206,11 @@ public class ActivityTwo extends AppCompatActivity {
             public Particle(Canvas c) {
                 X = (float) Math.random() * c.getWidth();
                 Y = (float) Math.random() * c.getHeight();
-                C = Color.argb(255, 0, 195, 229);
+                C = Color.HSVToColor(new float[]{
+                        (float) (360F * Math.random()),
+                        0.5F + ((float) Math.random()) / 2F,
+                        0.5F + ((float) Math.random()) / 2F
+                });
                 Vx = ((float) Math.random() - 0.5f) * 5;
                 Vy = ((float) Math.random() - 0.5f) * 5;
                 Proximity = ((float) Math.random() * 0.30f * (float) Math.sqrt(Math.pow(c.getWidth(), 2) + Math.pow(c.getHeight(), 2)));

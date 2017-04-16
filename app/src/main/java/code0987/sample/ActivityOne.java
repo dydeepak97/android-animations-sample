@@ -3,6 +3,7 @@ package code0987.sample;
 import android.animation.Animator;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -27,47 +28,57 @@ public class ActivityOne extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ActivityOne.this, ActivityTwo.class)
-                        , ActivityOptions.makeSceneTransitionAnimation(ActivityOne.this).toBundle());
+                Intent intent = new Intent(ActivityOne.this, ActivityTwo.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Bundle options = ActivityOptions.makeSceneTransitionAnimation(
+                            ActivityOne.this).toBundle();
+                    startActivity(intent, options);
+                } else {
+                    startActivity(intent);
+                }
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final RelativeLayout content = (RelativeLayout) findViewById(R.id.content);
 
-        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
 
-            }
+                }
 
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                View view = content;
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        View view = content;
 
-                int x = (view.getLeft() + view.getRight()) / 2;
-                int y = (view.getTop() + view.getBottom()) / 2;
-                float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
-                Animator animator = ViewAnimationUtils.createCircularReveal(view, x, y, 0, finalRadius);
-                view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
-                animator.start();
-            }
+                        int x = (view.getLeft() + view.getRight()) / 2;
+                        int y = (view.getTop() + view.getBottom()) / 2;
+                        float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
+                        Animator animator = ViewAnimationUtils.createCircularReveal(view, x, y, 0, finalRadius);
+                        view.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
+                        animator.start();
+                    }
+                }
 
-            @Override
-            public void onTransitionCancel(Transition transition) {
+                @Override
+                public void onTransitionCancel(Transition transition) {
 
-            }
+                }
 
-            @Override
-            public void onTransitionPause(Transition transition) {
+                @Override
+                public void onTransitionPause(Transition transition) {
 
-            }
+                }
 
-            @Override
-            public void onTransitionResume(Transition transition) {
+                @Override
+                public void onTransitionResume(Transition transition) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
