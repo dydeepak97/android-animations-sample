@@ -20,24 +20,11 @@ public class ActivityOne extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_one);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ActivityOne.this, ActivityTwo.class);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Bundle options = ActivityOptions.makeSceneTransitionAnimation(
-                            ActivityOne.this).toBundle();
-                    startActivity(intent, options);
-                } else {
-                    startActivity(intent);
-                }
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final RelativeLayout content = (RelativeLayout) findViewById(R.id.content);
@@ -79,6 +66,21 @@ public class ActivityOne extends AppCompatActivity {
                 }
             });
         }
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivityOne.this, ActivityTwo.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Bundle options = ActivityOptions.makeSceneTransitionAnimation(
+                            ActivityOne.this).toBundle();
+                    startActivity(intent, options);
+                } else {
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     @Override

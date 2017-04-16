@@ -2,9 +2,9 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_dark"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -33,25 +33,28 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/text"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Sample!"/>
-
         <ImageView
             android:id="@+id/action_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/text"
-            android:layout_margin="64dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/placeholder_animation"
             android:tint="@color/icons"
             android:tintMode="src_atop"
-            android:transitionName="action_image"/>
+            android:transitionName="action_image"
+            app:srcCompat="@drawable/placeholder_animation"
+            tools:targetApi="lollipop"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/itemsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_image"
+            android:scrollbars="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_view"/>
 
     </RelativeLayout>
 
@@ -62,7 +65,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/icons"
+        app:srcCompat="@drawable/ic_touch_app_black"
         android:tintMode="src_in"
-        app:srcCompat="@drawable/ic_touch_app_black"/>
+        tools:targetApi="lollipop"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:drawable="@color/splash_background"/>
     <item
@@ -8,6 +9,7 @@
         android:right="24dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_logo"/>
+            android:src="@mipmap/ic_launcher"
+            app:srcCompat="@drawable/ic_logo"/>
     </item>
 </layer-list>

@@ -10,7 +10,6 @@ import android.graphics.Path;
 import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,17 +28,11 @@ public class ActivityTwo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_two);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Now go back!", Snackbar.LENGTH_LONG).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final RelativeLayout content = (RelativeLayout) findViewById(R.id.content);
@@ -102,6 +95,14 @@ public class ActivityTwo extends AppCompatActivity {
                 }
             });
         }
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Now go back!", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     @Override
@@ -128,7 +129,7 @@ public class ActivityTwo extends AppCompatActivity {
             @Override
             public void run() {
                 removeCallbacks(this);
-                postDelayed(this, 1000 / 30);
+                postDelayed(this, 1000 / 40);
 
                 invalidate();
             }
@@ -173,7 +174,7 @@ public class ActivityTwo extends AppCompatActivity {
                         paint.reset();
                         paint.setAntiAlias(true);
                         paint.setColor(p.C);
-                        paint.setShader(new LinearGradient(0, 0, 0, 1, particles.get(i).C, particles.get(j).C, Shader.TileMode.MIRROR));
+                        // FIX: Performance issue! paint.setShader(new LinearGradient(0, 0, 0, 1, particles.get(i).C, particles.get(j).C, Shader.TileMode.MIRROR));
                         paint.setAlpha((int) (((p.Proximity - d) / p.Proximity) * 255));
                         paint.setStyle(Paint.Style.FILL_AND_STROKE);
                         paint.setStrokeWidth(1.5f);

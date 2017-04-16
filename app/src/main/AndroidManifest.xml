@@ -37,6 +37,10 @@
             android:name=".ActivityTwo">
         </activity>
 
+        <activity
+            android:name=".ItemViewActivity">
+        </activity>
+
     </application>
 
 </manifest>
